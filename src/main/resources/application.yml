@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: flowly-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/flowly
+    username: flowly
+    password: flowly
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true

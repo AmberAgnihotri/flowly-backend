@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:17
+    container_name: flowly-db
+    environment:
+      POSTGRES_DB: flowly
+      POSTGRES_USER: flowly
+      POSTGRES_PASSWORD: flowly
+    ports:
+      - "5432:5432"
+    volumes:
+      - flowly-db-data:/var/lib/postgresql/data
+
+volumes:
+  flowly-db-data:
