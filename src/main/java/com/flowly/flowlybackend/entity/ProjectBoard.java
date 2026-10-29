@@ -18,7 +18,7 @@ public class ProjectBoard {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
     protected ProjectBoard() {
@@ -27,11 +27,6 @@ public class ProjectBoard {
     public ProjectBoard(User owner, String name) {
         this.owner = owner;
         this.name = name;
-    }
-
-    @PrePersist
-    void onCreate() {
-        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
