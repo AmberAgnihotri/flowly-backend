@@ -1,3 +1,5 @@
+name: flowly
+
 services:
   db:
     image: postgres:17
@@ -10,6 +12,38 @@ services:
       - "5432:5432"
     volumes:
       - flowly-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flowly -d flowly"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: flowly-backend:latest
+    container_name: flowly-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/flowly
+      SPRING_DATASOURCE_USERNAME: flowly
+      SPRING_DATASOURCE_PASSWORD: flowly
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ../flowly-frontend
+      dockerfile: Dockerfile
+    container_name: flowly-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      DOCKER_ENV: "true"
+    depends_on:
+      - backend
 
 volumes:
   flowly-db-data:
+    external: true
+    name: flowly-backend_flowly-db-data
