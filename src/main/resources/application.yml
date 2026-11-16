@@ -11,3 +11,7 @@ spring:
     open-in-view: false
   flyway:
     enabled: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG

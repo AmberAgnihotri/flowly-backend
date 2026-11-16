@@ -1,0 +1,123 @@
+
+### 1. Health check
+GET http://localhost:8080/api/health
+
+### 2. Registreren
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "amber",
+  "password": "FlowlyTest123!"
+}
+
+### 3. Inloggen
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "amber",
+  "password": "FlowlyTest123!"
+}
+
+### 4. Projectboards ophalen
+GET http://localhost:8080/api/project-boards
+
+### 5. Projectboard aanmaken
+POST http://localhost:8080/api/project-boards
+Content-Type: application/json
+
+{
+  "name": "Mijn eerste projectboard"
+}
+
+### 6. Test: projectboard aanmaken zonder naam
+POST http://localhost:8080/api/project-boards
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### 7. Projectboard aanpassen
+PUT http://localhost:8080/api/project-boards/1
+Content-Type: application/json
+
+{
+  "name": "Flowly - Mijn project"
+}
+
+### 8. Test: projectboard aanpassen met lege naam
+PUT http://localhost:8080/api/project-boards/1
+Content-Type: application/json
+
+{
+  "name": "   "
+}
+
+### 9. Test: niet-bestaand projectboard aanpassen
+PUT http://localhost:8080/api/project-boards/9999
+Content-Type: application/json
+
+{
+  "name": "Bestaat niet"
+}
+
+### 10. Projectboard verwijderen
+DELETE http://localhost:8080/api/project-boards/1
+
+### 11. Projectboard aanmaken voor FR-03
+POST http://localhost:8080/api/project-boards
+Content-Type: application/json
+
+{
+  "name": "Testboard voor taken"
+}
+
+### 12. Eerste taak aanmaken
+POST http://localhost:8080/api/project-boards/2/tasks
+Content-Type: application/json
+
+{
+  "title": "Eerste testtaak",
+  "description": "Controleren of taken aangemaakt kunnen worden."
+}
+
+### 13. Taken van projectboard ophalen
+GET http://localhost:8080/api/project-boards/2/tasks
+
+### 14. Taak aanpassen
+PUT http://localhost:8080/api/project-boards/2/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Flowly backend afronden",
+  "description": "De CRUD-functionaliteit voor taken testen en afronden."
+}
+
+### 15. Test: taak aanpassen met lege titel
+PUT http://localhost:8080/api/project-boards/2/tasks/1
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "Deze wijziging mag niet worden opgeslagen."
+}
+
+### 16. Controleren of taakgegevens behouden zijn
+GET http://localhost:8080/api/project-boards/2/tasks
+
+### 17. Test: niet-bestaande taak aanpassen
+PUT http://localhost:8080/api/project-boards/2/tasks/9999
+Content-Type: application/json
+
+{
+  "title": "Bestaat niet",
+  "description": "Deze taak bestaat niet."
+}
+
+### 18. Taak verwijderen
+DELETE http://localhost:8080/api/project-boards/2/tasks/1
+
+### 19. Controleren of taak verwijderd is
+GET http://localhost:8080/api/project-boards/2/tasks

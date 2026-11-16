@@ -1,0 +1,47 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: flowly
+          POSTGRES_USER: flowly
+          POSTGRES_PASSWORD: flowly
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U flowly"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/flowly
+      SPRING_DATASOURCE_USERNAME: flowly
+      SPRING_DATASOURCE_PASSWORD: flowly
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Java 21 installeren
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: mvnw uitvoerbaar maken
+        run: chmod +x mvnw
+
+      - name: Bouwen en testen
+        run: ./mvnw -B verify
